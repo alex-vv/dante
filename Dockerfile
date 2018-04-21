@@ -46,8 +46,10 @@ ADD sockd.conf /etc/sockd.conf
 ENV CFGFILE /etc/sockd.conf
 ENV PIDFILE /tmp/sockd.pid
 ENV WORKERS 10
+ENV PROXY_USER proxy
+ENV PROXY_PASS proxy
 
 EXPOSE 1080
 
-CMD sockd -f $CFGFILE -p $PIDFILE -N $WORKERS
+CMD adduser -D $PROXY_USER;echo $PROXY_USER:$PROXY_PASS | chpasswd; sockd -f $CFGFILE -p $PIDFILE -N $WORKERS
 
